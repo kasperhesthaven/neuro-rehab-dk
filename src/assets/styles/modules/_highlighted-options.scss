@@ -1,0 +1,43 @@
+// =============================================================================
+// Highlighted options
+// =============================================================================
+
+.highlighted-options {
+	padding: rem(25px) 0;
+
+	background-color: $color-tertiary;
+
+	@include media(">=m") {
+		padding: rem(60px);
+	}
+}
+
+.highlighted-options__headline {
+	padding-bottom: 2em;
+
+	font-size: rem(20px);
+	text-transform: uppercase;
+
+	color: $color-secondary;
+}
+
+.highlighted-option {
+	padding: 1em 0;
+
+	@include media(">=m") {
+		padding: 1em;
+	}
+	@include media(">=l") {
+		padding: 1em 2em;
+	}
+	@include media(">=xl") {
+		padding: 1em 3em;
+	}
+}
+
+.highlighted-option__title {
+	padding-bottom: 1em;
+
+	font-weight: 900;
+	text-transform: uppercase;
+}

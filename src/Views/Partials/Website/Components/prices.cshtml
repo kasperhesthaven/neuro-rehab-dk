@@ -1,0 +1,33 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<section class="prices">
+	<div class="grid grid--container">
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 col--m-8 col--m-offset-4 col--xl-6 col--xl-offset-5 text--center">
+				@if (Model.Content.HasValue("pricesHeadline")) {
+					<h2 class="prices__headline">@Model.Content.GetPropertyValue("pricesHeadline")</h2>
+				}
+				@if (Model.Content.HasValue("pricesTextContent")) {
+					<p class="prices__text-content">@Model.Content.GetPropertyValue("pricesTextContent")</p>
+				}
+			</div>
+		</div>
+		<div class="row">
+			@if (Model.Content.HasValue("pricesCostList")) {
+				var listItems = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("pricesCostList");
+				<div class="prices--container col col--xxs-14 col--xxs-offset-1">
+					@if (listItems.Any()) {
+						foreach (var listItem in listItems) {
+							<div class="price">
+								<h3 class="price__title">@listItem.GetPropertyValue("listTitle")</h3>
+								<p class="price__text-content">@listItem.GetPropertyValue("listTextContent")</p>
+								<p class="price__cost">@listItem.GetPropertyValue("listPrice")</p>
+								<a href="@listItem.GetPropertyValue("listLinkURL")" class="price__link">@listItem.GetPropertyValue("listLinkText")</a>
+							</div>
+						}
+					}
+				</div>
+			}
+		</div>
+	</div>
+</section>

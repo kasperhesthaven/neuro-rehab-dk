@@ -1,0 +1,74 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+var cssClasses = "";
+	if (Model.Content.GetPropertyValue<bool>("splitContentAqua")) {
+		cssClasses = "split-content--aqua";
+	}
+	if (Model.Content.GetPropertyValue<bool>("splitContentCircles")) {
+		cssClasses += " split-content--circles-v1";
+	}
+}
+
+<section class="split-content split-content--text-image @cssClasses">
+	<div class="grid grid--container">
+		<div class="row wow fadeInUp" data-wow-duration=".85s">
+			@if (Model.Content.GetPropertyValue<bool>("splitContentReversed")) {
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-6 col--m-offset-1 col--xxs-first col--m-reset">
+					@{
+						var imageObject = Model.Content.GetPropertyValue<IPublishedContent>("splitContentImage");
+						var imageAlt = Model.Content.GetPropertyValue("splitContentImageAlt");
+						<img class="split-content__image" src="@imageObject.Url" alt="@imageAlt">
+					}
+				</div>
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-1 col--m-align-center ">
+					@if (Model.Content.HasValue("splitContentCategory")) {
+						<p class="split-content__category category-headline category-headline--orange">@Model.Content.GetPropertyValue("splitContentCategory")</p>
+					}
+					@if (Model.Content.HasValue("splitContentHeadline")) {
+						<h2 class="split-content__headline">@Model.Content.GetPropertyValue("splitContentHeadline")</h2>
+					}
+					@if (Model.Content.HasValue("splitContentTextContent")) {
+						<div class="split-content__text-content">@Model.Content.GetPropertyValue("splitContentTextContent")</div>
+					}
+					@if (Model.Content.HasValue("splitContentLinkText")) {
+						var linkURL = "";
+						if (Model.Content.HasValue("splitContentInternalLink")) {
+							linkURL = Umbraco.NiceUrl(Model.Content.GetPropertyValue<int>("splitContentInternalLink"));
+						} else if (Model.Content.HasValue("splitContentExternalLink")) {
+							linkURL = Model.Content.GetPropertyValue<string>("splitContentExternalLink");
+						}
+						<a href="@linkURL">@Model.Content.GetPropertyValue("splitContentLinkText")</a>
+					}
+				</div>
+			} else {
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-3 col--m-align-center">
+					@if (Model.Content.HasValue("splitContentCategory")) {
+						<p class="split-content__category category-headline category-headline--orange">@Model.Content.GetPropertyValue("splitContentCategory")</p>
+					}
+					@if (Model.Content.HasValue("splitContentHeadline")) {
+						<h2 class="split-content__headline">@Model.Content.GetPropertyValue("splitContentHeadline")</h2>
+					}
+					@if (Model.Content.HasValue("splitContentTextContent")) {
+						<div class="split-content__text-content">@Model.Content.GetPropertyValue("splitContentTextContent")</div>
+					}
+					@if (Model.Content.HasValue("splitContentLinkText")) {
+						var linkURL = "";
+						if (Model.Content.HasValue("splitContentInternalLink")) {
+							linkURL = Umbraco.NiceUrl(Model.Content.GetPropertyValue<int>("splitContentInternalLink"));
+						} else if (Model.Content.HasValue("splitContentExternalLink")) {
+							linkURL = Model.Content.GetPropertyValue<string>("splitContentExternalLink");
+						}
+						<a href="@linkURL">@Model.Content.GetPropertyValue("splitContentLinkText")</a>
+					}
+				</div>
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-6 col--m-offset-1 col--xxs-first col--m-reset">
+					@{
+						var imageObject = Model.Content.GetPropertyValue<IPublishedContent>("splitContentImage");
+						var imageAlt = Model.Content.GetPropertyValue("splitContentImageAlt");
+						<img class="split-content__image" src="@imageObject.Url" alt="@imageAlt">
+					}
+				</div>
+			}
+		</div>
+	</div>
+</section>

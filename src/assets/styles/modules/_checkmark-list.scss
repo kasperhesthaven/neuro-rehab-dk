@@ -1,0 +1,45 @@
+// =============================================================================
+// Checkmark list
+// =============================================================================
+
+.checkmark-list {
+	padding-left: 1.65em;
+
+	list-style-type: none;
+
+	@include media(">=m") {
+		padding-left: 0;
+	}
+}
+
+.checkmark-list--custom-therapy {
+	padding-top: 2.25em;
+}
+
+.checkmark-list__item {
+	position: relative;
+
+	margin-bottom: 1em;
+
+	border-bottom: 1px solid $color-primary;
+	&::before {
+		position: absolute;
+		top: 0.25em;
+		left: -1.5em;
+
+		display: block;
+		width: 6px;
+		height: 13px;
+
+		border-right: 2px solid #7bbead;
+		border-bottom: 2px solid #7bbead;
+
+		transform: rotate(45deg);
+
+		content: "";
+
+		@include media(">=m") {
+			left: -2.25em;
+		}
+	}
+}

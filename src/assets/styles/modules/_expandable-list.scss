@@ -1,0 +1,80 @@
+// =============================================================================
+// Expandable list
+// =============================================================================
+
+.expandable-list {
+	padding: 2rem 0 2rem 2.5rem;
+
+	list-style-type: none;
+
+	@include media(">=m") {
+		padding: 2rem 0;
+	}
+}
+
+.expandable-list__item {
+	margin-bottom: 1em;
+
+	opacity: 0.5;
+
+	transition: opacity $duration $ease-in-out-quad;
+
+	cursor: pointer;
+	&.js-active,
+	&:hover {
+		opacity: 1;
+	}
+	a::after {
+		content: none;
+	}
+}
+
+.expandable-list__item-title {
+	position: relative;
+
+	display: inline-block;
+	padding-bottom: 0.5em;
+
+	font-family: $font-family-heading;
+	font-weight: 700;
+	font-size: rem(18px);
+	line-height: 1;
+	text-transform: uppercase;
+
+	color: $color-secondary;
+	&::before {
+		position: absolute;
+		top: calc(50% - 0.25em);
+		left: -2.2em;
+
+		display: block;
+		width: 0;
+		height: 2px;
+
+		background-color: $color-primary;
+
+		transition: width $duration $ease-in-out-quad;
+
+		content: "";
+
+		@include media(">=m") {
+			left: -5em;
+		}
+	}
+	&:hover::before,
+	.js-active &::before {
+		width: 1.2em;
+
+		@include media(">=m") {
+			width: 3.35em;
+		}
+	}
+}
+
+.expandable-list__item-content {
+	display: none;
+	.js-active & {
+		display: block;
+		margin-bottom: 2em;
+	}
+}

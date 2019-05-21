@@ -1,0 +1,80 @@
+// =============================================================================
+// Configuration / Settings / Variables
+// =============================================================================
+// If it outputs CSS it doesn't belong here
+
+// =============================================================================
+// Typography
+// =============================================================================
+
+// Typefaces
+$font-family-heading: "Poppins", sans-serif;
+$font-family-body: "Lato", sans-serif;
+
+// Used for unit conversion functions
+$font-size: 16px !default;
+$line-height: 1.5;
+$line-height-heading: 1.25;
+
+// Heading sizes
+$font-size-h1: 3.125rem	!default;
+$font-size-h2: 2.875rem	!default;
+$font-size-h3: 1.125rem	!default;
+$font-size-h4: 1.125rem	!default;
+$font-size-h5: 1rem			!default;
+$font-size-h6: 0.8rem		!default;
+
+
+// =============================================================================
+// Color palette
+// =============================================================================
+
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-black-faded: #2C2A29;
+$color-grey: #707070;
+$color-grey-faded: #EFEEEE;
+$color-grey-light: #DBDBDB;
+$color-grey-dark: #535350;
+
+$color-primary: #0B446D;
+$color-secondary: #EA6852;
+$color-tertiary: #D1E6DF;
+
+
+// =============================================================================
+// Spacing Units
+// =============================================================================
+
+$container-width: 1920px;
+
+// Breakpoints
+$breakpoint-xxs:   	0px;
+$breakpoint-xs:  	375px;
+$breakpoint-s:    768px;
+$breakpoint-m:   1024px;
+$breakpoint-l:   1366px;
+$breakpoint-xl:  1600px;
+$breakpoint-xxl: 1920px;
+
+// Breakpoint aliases.
+// You can use these with the 'media()' mixin to quickly create media queries.
+// @include media(">=m") {} becomes @media (min-width: 1024px) {}
+// @include media(">m") {} becomes @media (min-width: 1025px) {}
+// @include media(">=m", "<=xxl") {} becomes @media (max-width: 1920px) and
+// (min-width: 1024px) {}
+$breakpoints: (
+	"breakpoint-xs":   375px,
+	"breakpoint-s":    768px,
+	"breakpoint-m":   1024px,
+	"breakpoint-l":   1366px,
+	"breakpoint-xl":  1600px,
+	"breakpoint-xxl": 1920px,
+	"xxs":    0px,
+	"xs":   375px,
+	"s":    768px,
+	"m":   1024px,
+	"l":   1366px,
+	"xl":  1600px,
+	"xxl": 1920px
+) !default;

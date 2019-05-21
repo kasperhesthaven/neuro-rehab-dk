@@ -1,0 +1,33 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<section class="faq">
+	<div class="grid grid--container">
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-3">
+				@if (Model.Content.HasValue("faqCategory")) {
+					<p class="faq__category category-headline category-headline--orange">@Model.Content.GetPropertyValue("faqCategory")</p>
+				}
+				@if (Model.Content.HasValue("faqHeadline")) {
+					<h2 class="faq__headline">@Model.Content.GetPropertyValue("faqHeadline")</h2>
+				}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-3">
+				@if (Model.Content.HasValue("faqList")) {
+					var listItems = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("faqList");
+					<ul class="faq-list">
+						@if (listItems.Any()) {
+							foreach (var listItem in listItems) {
+								<li class="faq-list__item">
+									<span class="faq-list__item-title">@listItem.GetPropertyValue("listTitle")</span>
+									<p class="faq-list__item-content">@listItem.GetPropertyValue("listTextContent")</p>
+								</li>
+							}
+						}
+					</ul>
+				}
+			</div>
+		</div>
+	</div>
+</section>

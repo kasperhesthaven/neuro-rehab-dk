@@ -1,0 +1,8 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "WebMaster.cshtml";
+	ViewBag.TemplateName = "speciality";
+}
+
+@* Content *@
+@Html.Partial("~/Views/Partials/Website/RenderContentComponents.cshtml", Model.Content, new ViewDataDictionary { { "propertyAlias", "content" } })

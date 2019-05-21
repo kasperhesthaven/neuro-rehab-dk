@@ -1,0 +1,31 @@
+// =============================================================================
+// Speciality
+// =============================================================================
+
+.speciality {
+	padding: rem(25px) 0;
+
+	@include media(">=m") {
+		padding: rem(200px) 0;
+	}
+}
+
+.speciality__headline {
+	padding-bottom: 0.25em;
+
+	@include media(">=m") {
+		padding-bottom: 1.15em;
+	}
+}
+
+.speciality__text-content {
+	padding-bottom: 0.5em;
+
+	@include media(">=m") {
+		padding-bottom: 2.5em;
+	}
+}
+
+.speciality__image {
+	box-shadow: 0 5px 22px 8px rgba($color-black,0.08);
+}

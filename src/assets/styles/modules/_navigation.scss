@@ -1,0 +1,265 @@
+// =============================================================================
+// Navigation
+// =============================================================================
+
+.logo {
+	display: none;
+
+	.js-active > & {
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
+
+		display: block;
+
+		@include media(">=s") {
+			top: 2rem;
+			left: 2rem;
+		}
+	}
+	&::before,
+	&::after {
+		content: none;
+	}
+	img {
+		width: rem(200px);
+	}
+	@include media(">=m") {
+		position: static;
+
+		display: inline-block;
+		.js-active > & {
+			position: static;
+		}
+	}
+}
+
+.navigation {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	right: 0;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	max-width: 1920px;
+	margin: 0 auto;
+	padding: 2rem;
+
+	&.js-active {
+		position: fixed;
+		top: 0;
+
+		width: 100vw;
+		height: 100vh;
+
+		background-color: $color-primary;
+	}
+	@include media(">=m") {
+		min-height: rem(150px);
+		padding: 3rem;
+		&.js-active {
+			min-height: rem(100px);
+			padding: .5rem 3rem;
+			height: auto;
+		}
+	}
+}
+
+.navigation-list {
+	// Removed overflow hidden from here
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	right: 0;
+	left: 0;
+
+	visibility: hidden;
+	width: 100%;
+	height: 0;
+	margin: 0 auto;
+
+	opacity: 0;
+
+	transition: opacity $duration $ease-in-out-quad, top $duration $ease-in-out-quad, height $duration $ease-in-out-quad;
+
+	.js-active & {
+		z-index: 1;
+		top: 25%;
+
+		visibility: visible;
+		height: 75%;
+		margin: 0 15%;
+
+		opacity: 1;
+	}
+	@include media(">=m") {
+		position: static;
+		z-index: 0;
+
+		display: flex;
+		visibility: visible;
+		height: auto;
+
+		opacity: 1;
+		.js-active & {
+			margin: 0;
+		}
+	}
+}
+
+.navigation-list__item {
+	position: relative;
+
+	display: block;
+	margin-right: 3.5em;
+	padding: 0.5em;
+
+	@include media(">=m") {
+		display: inline-block;
+	}
+}
+
+.navigation-list__link {
+	padding-bottom: 2em;
+
+	font-size: rem(18px);
+
+	color: $color-white;
+
+	&::before,
+	&::after {
+		width: 0;
+		margin-left: 0;
+	}
+	@include media(">=m") {
+		padding-bottom: 0;
+
+		font-size: 1rem;
+	}
+}
+
+.navigation-list__submenu {
+	position: absolute;
+	z-index: -1;
+	top: 100%;
+	right: 0;
+	left: 0;
+
+	display: block;
+	visibility: hidden;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100%;
+	margin-top: -1.5em;
+
+	opacity: 0;
+
+	list-style-type: none;
+
+	.js-active > & {
+		position: static;
+		z-index: 1;
+
+		visibility: visible;
+
+		opacity: 1;
+	}
+	@include media(">=m") {
+		background-color: $color-primary;
+		box-shadow: 1.5rem 0 0 $color-primary, -1.5rem 0 0 $color-primary;
+		display: flex;
+		margin: 0 auto;
+		padding-top: 0.75em;
+
+		transition: opacity $duration $ease-in-out-quad, visibility 0s linear $duration, z-index 0s linear 1ms;
+		.js-active > & {
+			position: absolute;
+		}
+	}
+}
+
+.navigation-list__item--submenu {
+	position: relative;
+
+	padding-bottom: 0.25em;
+
+	&::before {
+		position: absolute;
+		top: 1.25em;
+		left: -1.5em;
+
+		display: block;
+		width: 0.75em;
+		height: 2px;
+
+		background-color: $color-secondary;
+
+		transition: transform $duration $ease-in-out-quad;
+
+		content: "";
+	}
+	&::after {
+		position: absolute;
+		top: calc(1em - 1px);
+		// (Left position of before line - half the width of before line) - half the width of after line
+		left: calc(-1.125em - 1px);
+
+		display: block;
+		width: 2px;
+		height: 0.75em;
+
+		background-color: $color-secondary;
+
+		transition: height $duration $ease-in-out-quad, transform $duration $ease-in-out-quad;
+
+		content: "";
+	}
+	&.js-active::after {
+		transform: rotate(45deg);
+	}
+	&.js-active::before {
+		transform: rotate(45deg);
+	}
+	.navigation-list__link::after {
+		content: none;
+	}
+	@include media(">=m") {
+		&::after,
+		&::before {
+			content: none;
+		}
+		&:hover {
+			.navigation-list__submenu {
+				z-index: 1;
+
+				visibility: visible;
+
+				opacity: 1;
+
+				transition-delay: 0s, 0s, $duration;
+			}
+		}
+	}
+}
+
+.navigation-list__submenu-link {
+	font-weight: 500;
+	text-align: center;
+	text-transform: none;
+
+	color: $color-white;
+	&::after {
+		width: 0;
+		margin-left: 0;
+	}
+}
+
+.navigation-list__submenu-item {
+	padding: 0 1em 1em;
+}
+
+// Mobile styling

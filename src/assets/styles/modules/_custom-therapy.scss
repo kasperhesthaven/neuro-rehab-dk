@@ -1,0 +1,15 @@
+// =============================================================================
+// Section / Custom therapy
+// =============================================================================
+
+.custom-therapy {
+	padding: rem(25px) 0;
+
+	@include media(">=m") {
+		padding-top: rem(125px);
+	}
+}
+
+.custom-therapy__headline {
+	padding-top: 0.35em;
+}

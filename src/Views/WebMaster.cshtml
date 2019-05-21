@@ -1,0 +1,211 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Net.Mail
+
+@{
+	var website = Model.Content.AncestorOrSelf("website");
+	var homepage = Model.Content.AncestorOrSelf("homePage");
+
+	var navigationItems = website.Children.Where(x => x.IsVisible());
+	bool emailSent = false;
+
+	// Contact form
+	if (IsPost && ViewBag.TemplateName != "contactus") {
+		try {
+			// Input values
+			string contactName = Request.Form["name"];
+			string contactEmail = Request.Form["email"];
+			string contactPhone = Request.Form["phone"];
+			string contactMessage = Request.Form["message"];
+			contactMessage = contactMessage.Replace(System.Environment.NewLine, "<br />");
+			string contactFullMessage = "Hej! <br /><br /> En besked fra Neuro-rehab kontaktformularen er blevet sendt med følgende information: <br /><br /> <strong>Navn: </strong>" + contactName + "<br /><strong>E-mail: </strong>" + contactEmail + "<br /><strong>Telefon nr.: </strong>" + contactPhone + "<br /><strong>Besked:</strong><br />" + contactMessage + "<br /><br /> Afsender har givet samtykke til at Neurorehab registrerer de oplyste data til at besvare henvendelsen.";
+
+			MailMessage mail = new MailMessage();
+			mail.IsBodyHtml = true;
+			mail.From = new MailAddress("noreply@neuro-rehab.dk");
+
+			mail.To.Add("kontakt@neuro-rehab.dk");
+			mail.Subject = "Ny besked fra kontaktformular";
+			mail.Body = contactFullMessage;
+			mail.ReplyToList.Add(new MailAddress(contactEmail, contactName));
+
+			SmtpClient SmtpServer = new SmtpClient();
+			SmtpServer.Send(mail);
+			emailSent = true;
+		}
+		catch (Exception ex) {
+			emailSent = false;
+		}
+	}
+}
+<!DOCTYPE html>
+<html lang="@Umbraco.GetDictionaryValue("Website.HtmlLanguage")">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-128987813-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-128987813-1');
+        </script>
+		@Html.Partial("~/Views/Partials/Website/WebSEO.cshtml")
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="format-detection" content="telephone=no" />
+		<script src="@Url.Content("~/assets/scripts/vendors/wow.min.js")" async="true"></script>
+		<script>
+			function evaluateSupport(){try{return eval("class Something {}"),eval("var f = x => 1"),eval("let a = 1"),eval("const a = 1"),!0}catch(t){return!1}}function supportStatus(){const t=document.createElement("script");evaluateSupport()?(t.src="/assets/scripts/main.es6.min.js",document.body.appendChild(t)):(t.src="/assets/scripts/main.es5.min.js",document.body.appendChild(t))}window.addEventListener("load",supportStatus,!1);
+		</script>
+		<link rel="stylesheet" href="@Url.Content("~/assets/styles/main.min.css")" />
+		@Html.Partial("~/Views/Partials/Website/WebSocial.cshtml")
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<meta name="msapplication-TileColor" content="#0b446d">
+		<meta name="theme-color" content="#ffffff">
+	</head>
+
+	<body class="preload page-template-@ViewBag.TemplateName">
+    	<!-- Facebook Pixel Code -->
+        <script>!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),o.push=o,o.loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="https://connect.facebook.net/en_US/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","2414716965224614"),fbq("track","PageView");</script>
+        <noscript>
+        	<img height="1" width="1" src="https://www.facebook.com/tr?id=2414716965224614&ev=PageView&noscript=1"/>
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+		<main role="main">
+			<header class="navigation" id="topNavigationContainer" role="banner">
+				<a class="logo" href="/">
+					<img src="@Url.Content("~/assets/images/logo.svg")" alt="Neuro-rehab">
+				</a>
+				<nav role="navigation">
+					<button class="btn btn--burger" id="burgerToggle" type="button"><span class="line"></span><span class="line"></span><span class="line"></span></button>
+					@if (navigationItems.Any()) {
+						<ul class="navigation-list" id="topNavigationList" role="menubar">
+							@foreach (var page in navigationItems) {
+								var pageName = page.HasValue("pageNavigationName") ? page.GetPropertyValue("pageNavigationName") : page.Name;
+								var subItems = page.Children.Where(x => x.IsVisible());
+								if (subItems.Any()) {
+									<li class="navigation-list__item navigation-list__item--submenu">
+										<a class="navigation-list__link" href="@page.Url" role="menuitem">@pageName</a>
+										<ul class="navigation-list__submenu" role="menu">
+											@foreach (var subItem in subItems) {
+												var subName = subItem.HasValue("pageNavigationName") ? subItem.GetPropertyValue("pageNavigationName") : subItem.Name;
+												<li class="navigation-list__submenu-item" role="none">
+													<a class="navigation-list__submenu-link" href="@subItem.Url" role="menuitem">@subName</a>
+												</li>
+											}
+										</ul>
+									</li>
+								}
+								else {
+									<li class="navigation-list__item" role="none">
+										<a class="navigation-list__link" href="@page.Url" role="menuitem">@pageName</a>
+									</li>
+								}
+							}
+						</ul>
+					}
+				</nav>
+			</header>
+			@RenderBody()
+		</main>
+		<footer>
+			@if (ViewBag.TemplateName != "contactus") {
+				<div class="footer-contact">
+					<div class="footer-contact__infomation wow fadeInLeft" data-wow-duration=".6s">
+						<p class="footer-contact__infomation-headline">Kontaktinformationer</p>
+						<p class="footer-contact__infomation-phone">
+							@if (website.HasValue("contactInfoPhoneNumber")) {
+								<a href="tel:@website.GetPropertyValue("contactInfoPhoneNumber")" onclick="fbq('track', 'Contact');">@website.GetPropertyValue("contactInfoPhoneNumber")</a>
+							}
+						</p>
+						<a class="footer-contact__infomation-email" onclick="fbq('track', 'Contact');" href="mailto:kontakt@neuro-rehab.dk">
+							@if (website.HasValue("contactInfoEmail")) {
+								@website.GetPropertyValue("contactInfoEmail");
+							}
+						</a>
+						<address>
+							@if (website.HasValue("contactInfoAddress")) {
+								@Html.Raw(@umbraco.library.ReplaceLineBreaks(website.GetPropertyValue<string>("contactInfoAddress")));
+							}
+						</address>
+					</div>
+					<div class="footer-contact__form col col--m-7 col--no-gutters wow fadeInRight" data-wow-duration=".7s">
+						<h2 class="footer-contact__form-headline">Kontakt os</h2>
+						<form class="contact-form" method="post">
+							<input class="contact-form__input" id="contactFormName" type="text" name="Name" required="true" placeholder=" ">
+							<label class="contact-form__label" for="contactFormName">Navn</label>
+							<input class="contact-form__input" id="contactFormEmail" type="email" name="Email" required="true" placeholder=" ">
+							<label class="contact-form__label" for="contactFormEmail">E-mail</label>
+							<input class="contact-form__input" id="contactFormPhone" type="tel" name="Phone" required="true" placeholder=" ">
+							<label class="contact-form__label" for="contactFormPhone">Telefon nr.</label>
+							<textarea class="contact-form__field contact-form__field--textarea" id="contactFormMessage" name="Message" rows="4" required="true" placeholder=" "></textarea>
+							<label class="contact-form__label contact-form__label--textarea" for="contactFormMessage">Besked</label>
+							<input class="contact-form__checkbox" id="contactFormGDPR" type="checkbox" name="GDPR" required="true">
+							<label class="contact-form__label--checkbox" for="contactFormGDPR">Jeg giver samtykke til, at Neurorehab registrerer de data, som jeg oplyser i formularen, for at besvare min henvendelse.</label>
+							<button class="btn--contact-form" type="submit" onclick="fbq('track', 'Lead');">Send</button>
+						</form>
+					</div>
+				</div>
+			}
+			<div class="footer-gutter grid grid--container">
+				<div class="row">
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-3 col--m-offset-2">
+						<a class="footer-gutter__link" href="/genoptraening/">Genoptræning</a>
+						<a class="footer-gutter__link" href="/genoptraening/apopleksi/">Apopleksi</a>
+						<a class="footer-gutter__link" href="/genoptraening/traumatisk-hjerneskade/">Traumatisk hjerneskade</a>
+					</div>
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-3 col--m-offset-0">
+						<a class="footer-gutter__link" href="/om-klinikken/">Om klinikken</a>
+						<a class="footer-gutter__link" href="/kontakt/">Kontakt os</a>
+						<a class="footer-gutter__link" href="/datapolitik/">Datapolitik</a>
+					</div>
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-1 col--m-offset-2">
+						@if (website.HasValue("contactInfoLinkedIn")) {
+							<a class="footer-gutter__link-some" href="@website.GetPropertyValue("contactInfoLinkedIn")">
+								<span class="icon icon--linkedin">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+										<defs>
+											<path d="M0 0h25v25H0z"/>
+										</defs>
+										<g>
+											<path fill="#fff" d="M0 12.5C0 5.6 5.6 0 12.5 0S25 5.6 25 12.5 19.4 25 12.5 25 0 19.4 0 12.5zm7.7-4.1c1.1 0 1.7-.7 1.7-1.6 0-.9-.6-1.6-1.7-1.6C6.7 5.3 6 6 6 6.9c0 .9.7 1.5 1.7 1.5zM17 18.7h3v-5.2c0-2.8-1.5-4-3.4-4-1.6 0-2.3.9-2.7 1.5V9.7h-3v9h3v-5c0-.3 0-.5.1-.7.2-.5.7-1.1 1.5-1.1 1.1 0 1.5.8 1.5 2v4.8zm-10.8 0h3v-9h-3v9z" class="st1"/>
+										</g>
+									</svg>
+								</span>
+							</a>
+						}
+						@if (website.HasValue("contactInfoFacebook")) {
+							<a class="footer-gutter__link-some" href="@website.GetPropertyValue("contactInfoFacebook")">
+								<span class="icon icon--facebook">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+										<path fill="none" d="M-873.5-5522.7h1552V137.2h-1552z"/>
+										<path fill="#fff" d="M0 12.5C0 5.6 5.6 0 12.5 0S25 5.6 25 12.5 19.4 25 12.5 25 0 19.4 0 12.5zm14.1-4.9h1.8V4.9h-2.5C10.6 4.9 10 7 10 8.3v1.9H8.4V13H10v8.2h3.4V13h2.2l.3-2.9h-2.5V8.4c0-.6.4-.8.7-.8z"/>
+									</svg>
+								</span>
+							</a>
+						}
+					</div>
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-3 col--m-offset-0">
+						<address class="address--footer">
+							@if (website.HasValue("contactInfoPhoneNumber")) {
+								<a href="tel:@website.GetPropertyValue("contactInfoPhoneNumber")" onclick="fbq('track', 'Contact');">@website.GetPropertyValue("contactInfoPhoneNumber")</a>
+							}
+							<br>
+							@if (website.HasValue("contactInfoAddress")) {
+								@Html.Raw(@umbraco.library.ReplaceLineBreaks(website.GetPropertyValue<string>("contactInfoAddress")));
+							}
+							<br>
+							CVR:
+							@if (website.HasValue("contactInfoCVR")) {
+								@website.GetPropertyValue("contactInfoCVR");
+							}
+						</address>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

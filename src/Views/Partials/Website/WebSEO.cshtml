@@ -1,0 +1,35 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    var host = HttpContext.Current.Request.Url.Host;
+    string domainUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Host;
+}
+
+<title>@(Model.Content.HasValue("seoMetaTitle") ? Model.Content.GetPropertyValue("seoMetaTitle") : Model.Content.Name)</title>
+
+@if (Model.Content.HasValue("seoMetaDescription"))
+{
+    <meta name="description" content="@Model.Content.GetPropertyValue("seoMetaDescription")" />
+}
+
+@if (Model.Content.HasValue("seoMetaRobots") && HttpContext.Current.Request.QueryString["critical-css-task"] == null)
+{
+    <meta name="robots" content="@(string.Join(",", Model.Content.GetPropertyValue<IEnumerable<string>>("seoMetaRobots")).ToLower())" />
+}
+
+@if (Model.Content.HasValue("seoCanonical"))
+{
+    var canonicalNode = Model.Content.GetPropertyValue<IPublishedContent>("seoCanonical");
+    if (canonicalNode != null)
+    {
+        <link rel="canonical" href="@(domainUrl + canonicalNode.Url)" />
+    }
+}
+else if (!string.IsNullOrEmpty(ViewBag.WebSeoCanonicalUrl))
+{
+    <link rel="canonical" href="@(domainUrl + ViewBag.WebSeoCanonicalUrl)" />
+}
+
+@if (host.ToLower().Contains(".by.gotcha.dk") && HttpContext.Current.Request.QueryString["critical-css-task"] == null)
+{
+    <meta name="robots" content="noindex,nofollow" />
+}

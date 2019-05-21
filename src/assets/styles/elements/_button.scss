@@ -1,0 +1,37 @@
+// =============================================================================
+// Button
+// =============================================================================
+
+button {
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: 900;
+	background-color: transparent;
+	border: 0;
+	border-radius: 0;
+
+	color: inherit;
+
+	cursor: pointer;
+	display: inline-block;
+	&:focus,
+	&:hover {
+		outline: 0;
+	}
+	&::after {
+		content: '';
+		display: block;
+		width: calc(100% - .5em);
+		margin-top: .2em;
+		margin-left: .15em;
+		max-width: 3.4em;
+		height: 3px;
+		background-color: $color-secondary;
+		transition: width $duration $ease-in-out-quad, margin-left $duration $ease-in-out-quad, max-width $duration $ease-in-out-quad;
+	}
+	&:hover::after {
+		width: 100%;
+		max-width: 100%;
+		margin-left: 0;
+	}
+}

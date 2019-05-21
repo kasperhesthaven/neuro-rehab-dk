@@ -1,0 +1,39 @@
+// =============================================================================
+// Contact map
+// =============================================================================
+
+.contact-map {
+	position: relative;
+}
+
+.contact-map__information {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 18.75%;
+
+	display: none;
+	width: 37.5%;
+	padding: 5rem;
+
+	box-shadow: 0 26px 22px -2px rgba(0,0,0,0.09);
+	background-color: $color-white;
+
+	@include media(">=m") {
+		display: block;
+	}
+}
+
+.contact-map__information-headline {
+	padding-bottom:  1em;
+}
+
+.contact-map__map-container {
+	height: 50vh;
+	min-height: rem(400px);
+	max-height: rem(800px);
+	button::before,
+	button::after {
+		content: none;
+	}
+}

@@ -1,0 +1,93 @@
+// ==========================================================================
+// Footer contact section
+// ==========================================================================
+
+.footer-contact {
+	z-index: 1;
+
+	display: flex;
+	flex: 0 1 100%;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: rem(25px) 0;
+
+	@include media(">=m") {
+		padding: 0;
+		padding-bottom: rem(100px);
+	}
+}
+
+.footer-contact__infomation {
+	display: none;
+	align-self: center;
+
+	font-family: $font-family-heading;
+	font-weight: 700;
+
+	background-color: $color-tertiary;
+
+	@include media(">=m") {
+		display: block;
+		width: 44.5%;
+		margin-left: 6.25%;
+		padding: 3.5rem;
+	}
+	@include media(">=xl") {
+		width: 31.25%;
+		margin-left: 10.625%;
+		padding: 4.5rem;
+	}
+}
+
+.footer-contact__infomation-headline {
+	padding-bottom: 1.5em;
+
+	font-size: rem(14px);
+	text-transform: uppercase;
+}
+
+.footer-contact__infomation-phone {
+	padding-bottom: 0.25em;
+
+	font-size: $font-size-h2;
+
+	color: $color-secondary;
+}
+
+.footer-contact__infomation-email {
+	padding-bottom: 2.5em;
+
+	font-weight: 500;
+	font-size: rem(18px);
+	text-transform: none;
+
+	color: $color-secondary;
+	&::after {
+		content: none;
+	}
+}
+
+.footer-contact__form {
+	max-width: 87.5%;
+	margin: 6.25%;
+	padding: 5.5rem 2.5rem 3rem;
+
+	border: 3px solid #ea6852;
+	box-shadow: 15px 12px 22px 8px rgba(0,0,0,0.07);
+	background-color: $color-white;
+
+	@include media(">=m") {
+		width: 43%;
+		margin: 0;
+		margin-top: -3.5rem;
+		padding: 6.5rem 3.75rem 3rem;
+	}
+	@include media(">=xl") {
+		width: 43.75%;
+		padding: 7.5rem 5.5rem 3rem;
+	}
+}
+
+.footer-contact__form-headline {
+	padding-bottom: 0.75em;
+}

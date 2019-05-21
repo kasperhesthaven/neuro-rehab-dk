@@ -1,0 +1,88 @@
+// =============================================================================
+// Prices
+// =============================================================================
+
+.prices {
+	padding: rem(25px) 0;
+
+	@include media(">=m") {
+		padding: rem(125px) 0;
+	}
+}
+
+.prices__headline {
+	padding-bottom: 0.35em;
+}
+
+.prices__text-content {
+	padding-bottom: 1em;
+}
+
+.prices--container {
+	display: flex;
+	flex: 0 1 87.5%;
+	flex-wrap: wrap;
+}
+
+.price {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin: 0.5em 0;
+	padding: 3.75em 2em 0;
+
+	border: 3px solid $color-secondary;
+
+	@include media(">=s") {
+		width: calc(50% - 1em);
+		margin: 0.5em;
+	}
+	@include media(">=l") {
+		width: calc(25% - 1em);
+	}
+}
+
+.price__title {
+	padding-bottom: 2em;
+
+	font-weight: 700;
+	font-size: rem(24px);
+	text-align: center;
+}
+
+.price__text-content {
+	padding-bottom: 0.5em;
+}
+
+.price__cost {
+	margin-top: auto;
+	padding-bottom: 0.75em;
+
+	font-family: $font-family-heading;
+	font-weight: 700;
+	font-size: rem(36px);
+	text-align: center;
+
+	color: $color-secondary;
+}
+
+.price__link {
+	display: block;
+	margin: 0 -2em;
+	padding: 1.5em 0;
+
+	line-height: 1;
+	text-align: center;
+
+	border-top: 3px solid $color-secondary;
+	background-color: $color-white;
+
+	transition: background-color $duration * 0.75 $ease-in-out-quad, color $duration * 0.75 $ease-in-out-quad;
+	&:hover {
+		color: $color-white;
+		background-color: $color-secondary;
+	}
+	&::after {
+		content: none;
+	}
+}

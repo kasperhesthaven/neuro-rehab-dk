@@ -1,0 +1,138 @@
+// =============================================================================
+// Section / FAQ
+// =============================================================================
+
+.faq {
+	// Circles
+	position: relative;
+
+	overflow: hidden;
+	padding: rem(25px) 0;
+
+	@include media(">=m") {
+		padding: rem(125px) 0 rem(200px);
+	}
+	&::before {
+		position: absolute;
+		z-index: -1;
+		right: 0;
+		bottom: 15%;
+
+		width: rem(800px);
+		height: rem(800px);
+
+		border: rem(110px) solid $color-primary;
+		border-radius: 50%;
+
+		transform: translateX(50%);
+
+		@include media(">=m") {
+			content: "";
+		}
+	}
+	&::after {
+		position: absolute;
+		z-index: -1;
+		right: 0;
+		bottom: calc(15% + 250px);
+
+		width: rem(280px);
+		height: rem(280px);
+
+		border: rem(40px) solid $color-tertiary;
+		border-radius: 50%;
+
+		transform: translateX(50%);
+
+		@include media(">=m") {
+			content: "";
+		}
+	}
+}
+
+.faq__headline {
+	padding: 0.25em 0;
+}
+
+.faq-list {
+	padding: 2rem 0 2rem 2.5rem;
+
+	list-style-type: none;
+
+	@include media(">=m") {
+		padding: 2rem 0;
+	}
+}
+
+.faq-list__item {
+	margin-bottom: 1em;
+
+	cursor: pointer;
+}
+
+.faq-list__item-title {
+	position: relative;
+
+	display: block;
+	margin-bottom: 1em;
+	padding-bottom: 0.5em;
+
+	line-height: 1;
+
+	border-bottom: 1px solid $color-primary;
+	&::before {
+		position: absolute;
+		top: calc(50% - 0.25em);
+		left: -2em;
+
+		display: block;
+		width: 0.75em;
+		height: 2px;
+
+		background-color: $color-secondary;
+
+		transform-origin: top;
+		transition: transform $duration $ease-in-out-quad;
+
+		content: "";
+	}
+	&::after {
+		position: absolute;
+		top: calc(50% - 0.25em);
+		// (Left position of before line - half the width of before line) - half the width of after line
+		left: calc(-1.625em - 1px);
+
+		display: block;
+		width: 2px;
+		height: 2px;
+
+		background-color: $color-secondary;
+
+		transform-origin: top;
+		transition: height $duration $ease-in-out-quad, transform $duration $ease-in-out-quad;
+
+		content: "";
+	}
+	&:hover::after,
+	.js-active &::after {
+		height: 0.75em;
+
+		transform: translateY(-42.5%);
+	}
+	.js-active &:hover::after {
+		transform: rotate(45deg) translateY(-42.5%);
+	}
+	.js-active &:hover::before {
+		transform: rotate(45deg);
+	}
+}
+
+.faq-list__item-content {
+	display: none;
+	.js-active & {
+		display: block;
+		margin-bottom: 1em;
+
+		cursor: text;
+	}
+}

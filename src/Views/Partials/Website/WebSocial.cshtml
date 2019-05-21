@@ -1,0 +1,50 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    string domainUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Host;
+
+    string socialTitle = Model.Content.Name;
+    if (Model.Content.HasValue("socialTitle"))
+    {
+        socialTitle = Model.Content.GetPropertyValue<string>("socialTitle");
+    }
+    else if (Model.Content.HasValue("seoMetaTitle"))
+    {
+        socialTitle = Model.Content.GetPropertyValue<string>("seoMetaTitle");
+    }
+
+    string socialType = "website";
+    if (Model.Content.HasValue("socialType"))
+    {
+        socialType = Model.Content.GetPropertyValue<string>("socialType");
+    }
+}
+
+<meta property="og:title" content="@socialTitle" />
+<meta property="og:type" content="@socialType" />
+<meta property="og:url" content='@CurrentPage.Url' />
+
+@if (Model.Content.HasValue("socialImage"))
+{
+    var socialImage = Model.Content.GetPropertyValue<IPublishedContent>("socialImage");
+    if (socialImage != null)
+    {
+        <meta property="og:image" content='@(domainUrl + socialImage.Url)' />
+    }
+}
+
+@if (Model.Content.HasValue("socialDescription") || Model.Content.HasValue("seoMetaDescription"))
+{
+    string socialDescription = "";
+    if (Model.Content.HasValue("socialDescription"))
+    {
+        socialDescription = Model.Content.GetPropertyValue<string>("socialDescription");
+    }
+    else
+    {
+        socialDescription = Model.Content.GetPropertyValue<string>("seoMetaDescription");
+    }
+
+    <meta property="og:description" content="@socialDescription" />
+}
+
+<meta property="og:site_name" content="@Model.Content.GetPropertyValue("socialSiteName")" />

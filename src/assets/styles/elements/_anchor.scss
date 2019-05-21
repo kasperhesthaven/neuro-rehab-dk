@@ -1,0 +1,42 @@
+// ==========================================================================
+// Anchors / Hyperlinks
+// ==========================================================================
+
+a {
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: 900;
+
+	color: inherit;
+
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	position: relative;
+	&:focus,
+	&:hover {
+		outline: 0;
+	}
+	&::after,
+	&::before {
+		content: '';
+		display: block;
+		margin-top: .2em;
+		height: 3px;
+		background-color: $color-secondary;
+		transition: transform $duration $ease-in-out-quad;
+	}
+	&::before {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		transform: translateX(-200%);
+		transition-delay: .25s;
+	}
+	&:hover::before {
+		transform: translateX(0%);
+	}
+	&:hover::after {
+		transform: translateX(100%);
+	}
+}

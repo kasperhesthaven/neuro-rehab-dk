@@ -1,0 +1,30 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<section class="custom-therapy">
+	<div class="grid grid--container">
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-4 col--m-offset-3">
+				@if (Model.Content.HasValue("customTherapyCategory")) {
+					<p class="custom-therapy__category category-headline category-headline--orange">@Model.Content.GetPropertyValue("customTherapyCategory")</p>
+				}
+				@if (Model.Content.HasValue("customTherapyHeadline")) {
+					<h2 class="custom-therapy__headline">@Model.Content.GetPropertyValue("customTherapyHeadline")</h2>
+				}
+			</div>
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-1">
+				@if (Model.Content.HasValue("customTherapyCheckmarkList")) {
+					var listItems = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("customTherapyCheckmarkList");
+					<ul class="checkmark-list checkmark-list--custom-therapy">
+						@if (listItems.Any()) {
+							foreach (var listItem in listItems) {
+								<li class="checkmark-list__item">
+									<p class="checkmark-list__item-content">@listItem.GetPropertyValue("listTextContent")</p>
+								</li>
+							}
+						}
+					</ul>
+				}
+			</div>
+		</div>
+	</div>
+</section>

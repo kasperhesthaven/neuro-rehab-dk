@@ -1,0 +1,41 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+		string propertyAlias = (string)ViewData["propertyAlias"];
+}
+
+@if (!string.IsNullOrEmpty(propertyAlias) && Model.Content.HasValue(propertyAlias)) {
+	var contentComponents = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>(propertyAlias);
+
+	foreach (var component in contentComponents) {
+		switch (component.DocumentTypeAlias) {
+			case "heroElm":
+				@Html.Partial("~/Views/Partials/Website/Components/hero.cshtml", component);
+				break;
+			case "splitContentElm":
+				@Html.Partial("~/Views/Partials/Website/Components/split-content.cshtml", component);
+				break;
+			case "specialityElm":
+				@Html.Partial("~/Views/Partials/Website/Components/speciality.cshtml", component);
+				break;
+			case "testimonialElm":
+				@Html.Partial("~/Views/Partials/Website/Components/testimonial.cshtml", component);
+				break;
+			case "clinicElm":
+				@Html.Partial("~/Views/Partials/Website/Components/clinic.cshtml", component);
+				break;
+			case "faqElm":
+				@Html.Partial("~/Views/Partials/Website/Components/faq.cshtml", component);
+				break;
+			case "pricesElm":
+				@Html.Partial("~/Views/Partials/Website/Components/prices.cshtml", component);
+				break;
+			case "highlightedOptionsElm":
+				@Html.Partial("~/Views/Partials/Website/Components/highlighted-options.cshtml", component);
+				break;
+			case "customTherapyElm":
+				@Html.Partial("~/Views/Partials/Website/Components/custom-therapy.cshtml", component);
+				break;
+		}
+	}
+}

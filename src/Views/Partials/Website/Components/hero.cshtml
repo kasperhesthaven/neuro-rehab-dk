@@ -1,0 +1,40 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@if (Model.Content.HasValue("heroImage")) {
+	var imageObject = Model.Content.GetPropertyValue<IPublishedContent>("heroImage");
+	<section class="hero" style="background-image: url(@imageObject.Url)">
+		<div class="grid grid--container text--xxs-center text--m-left">
+			@if (Model.Content.HasValue("heroCategory")) {
+				<div class="row">
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-3">
+						<p class="hero__category wow fadeInDown" data-wow-duration="1s" data-wow-delay=".25s">@Model.Content.GetPropertyValue("heroCategory")</p>
+					</div>
+				</div>
+			}
+			@if (Model.Content.HasValue("heroHeadline")) {
+				<div class="row">
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-8 col--m-offset-3 col--l-7 col--xl-6">
+						<h1 class="hero__headline wow fadeInDown" data-wow-duration="1s" data-wow-delay=".25s">@Model.Content.GetPropertyValue("heroHeadline")</h1>
+					</div>
+				</div>
+			}
+			@if (Model.Content.HasValue("heroTextContent")) {
+				<div class="row">
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-6 col--m-offset-3 col--l-5 col--xl-4">
+						<p class="hero__text-content wow fadeInDown" data-wow-duration="1s" data-wow-delay=".45s">@Model.Content.GetPropertyValue("heroTextContent")</p>
+					</div>
+				</div>
+			}
+			@if (Model.Content.GetPropertyValue<bool>("heroReadMore")) {
+				<div class="row">
+					<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-6 col--m-offset-3 col--l-5 col--xl-4">
+						<span class="scroll-btn scroll-btn--hero wow fadeInDown" data-wow-duration="1s" data-wow-delay=".65s">
+							<span class="icon scroll-btn__icon">
+							</span>
+						</span>
+					</div>
+				</div>
+			}
+		</div>
+	</section>
+}

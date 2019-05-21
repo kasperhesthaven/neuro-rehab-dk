@@ -1,0 +1,39 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<section class="highlighted-options">
+	<div class="grid grid--container">
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 text--center">
+				@if (Model.Content.HasValue("highlightedOptionsHeadline")) {
+					<h2 class="highlighted-options__headline">@Model.Content.GetPropertyValue("highlightedOptionsHeadline")</h2>
+				}
+			</div>
+		</div>
+		<div class="row">
+			<div class="highlighted-option col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-4 col--m-offset-2">
+					@if (Model.Content.HasValue("highlightedOptionsFirstTitle")) {
+						<p class="highlighted-option__title">@Model.Content.GetPropertyValue("highlightedOptionsFirstTitle")</p>
+					}
+					@if (Model.Content.HasValue("highlightedOptionsFirstTextContent")) {
+						<p class="highlighted-option__text-content">@Model.Content.GetPropertyValue("highlightedOptionsFirstTextContent")</p>
+					}
+				</div>
+			<div class="highlighted-option col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-4 col--m-offset-0">
+				@if (Model.Content.HasValue("highlightedOptionsSecondTitle")) {
+					<p class="highlighted-option__title">@Model.Content.GetPropertyValue("highlightedOptionsSecondTitle")</p>
+				}
+				@if (Model.Content.HasValue("highlightedOptionsSecondTextContent")) {
+					<p class="highlighted-option__text-content">@Model.Content.GetPropertyValue("highlightedOptionsSecondTextContent")</p>
+				}
+			</div>
+			<div class="highlighted-option col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-4 col--m-offset-0">
+				@if (Model.Content.HasValue("highlightedOptionsThirdTitle")) {
+					<p class="highlighted-option__title">@Model.Content.GetPropertyValue("highlightedOptionsThirdTitle")</p>
+				}
+				@if (Model.Content.HasValue("highlightedOptionsThirdTextContent")) {
+					<p class="highlighted-option__text-content">@Model.Content.GetPropertyValue("highlightedOptionsThirdTextContent")</p>
+				}
+			</div>
+		</div>
+	</div>
+</section>

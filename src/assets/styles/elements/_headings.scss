@@ -1,0 +1,42 @@
+// ==========================================================================
+// Headings
+// ==========================================================================
+
+h1 {
+	font-weight: 700;
+	font-family: $font-family-heading;
+	font-size: $font-size-h1 * 0.65;
+	line-height: 1.27;
+	@include media(">=m") {
+		font-size: $font-size-h1;
+	}
+}
+
+h2 {
+	font-weight: 700;
+	font-family: $font-family-heading;
+	font-size: $font-size-h2 * 0.65;
+	line-height: 1.27;
+	@include media(">=m") {
+		font-size: $font-size-h2;
+	}
+}
+
+h3 {
+	font-weight: 300;
+	font-size: $font-size-h3;
+	line-height: 1.25em;
+}
+
+h4 {
+	font-size: $font-size-h4;
+	line-height: 1.22225em;
+}
+
+h5 {
+	font-size: $font-size-h5;
+}
+
+h6 {
+	font-size: $font-size-h6;
+}

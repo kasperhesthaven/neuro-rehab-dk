@@ -1,0 +1,18 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<section class="testimonial">
+	<div class="grid grid--container">
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-8 col--m-offset-4 text--center">
+				<blockquote class="testimonial__quote">
+					@if (Model.Content.HasValue("testimonialTextContent")) {
+						<span>@Model.Content.GetPropertyValue("testimonialTextContent")</span>
+					}
+					@if (Model.Content.HasValue("testimonialAuthor")) {
+						<cite class="testimonial__author">@Model.Content.GetPropertyValue("testimonialAuthor")</cite>
+					}
+				</blockquote>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,88 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Net.Mail
+
+@{
+	Layout = "WebMaster.cshtml";
+	ViewBag.TemplateName = "contactus";
+	var website = Model.Content.AncestorOrSelf("website");
+	bool emailSent = false;
+
+	// Contact form
+	if (IsPost) {
+		try {
+			// Input values
+			string contactName = Request.Form["name"];
+			string contactEmail = Request.Form["email"];
+			string contactPhone = Request.Form["phone"];
+			string contactMessage = Request.Form["message"];
+			contactMessage = contactMessage.Replace(System.Environment.NewLine, "<br />");
+			string contactFullMessage = "Hej! <br /><br /> En besked fra Neuro-rehab kontaktformularen er blevet sendt med følgende information: <br /><br /> <strong>Navn: </strong>" + contactName + "<br /><strong>E-mail: </strong>" + contactEmail + "<br /><strong>Telefon nr.: </strong>" + contactPhone + "<br /><strong>Besked:</strong><br />" + contactMessage + "<br /><br /> Afsender har givet samtykke til at Neurorehab registrerer de oplyste data til at besvare henvendelsen.";
+
+			MailMessage mail = new MailMessage();
+			mail.IsBodyHtml = true;
+			mail.From = new MailAddress("noreply@neuro-rehab.dk");
+
+			mail.To.Add("kontakt@neuro-rehab.dk");
+			mail.Subject = "Ny besked fra kontaktformular";
+			mail.Body = contactFullMessage;
+			mail.ReplyToList.Add(new MailAddress(contactEmail, contactName));
+
+			SmtpClient SmtpServer = new SmtpClient();
+			SmtpServer.Send(mail);
+			emailSent = true;
+		}
+		catch (Exception ex) {
+			emailSent = false;
+		}
+	}
+}
+
+@if (emailSent) {
+	<section class="hero" style="background-image: url(/media/1001/frontpage-hero-bg.jpg)">
+		<div class="grid grid--container text--xxs-center text--m-left">
+			<div class="row">
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-8 col--m-offset-3 col--l-7 col--xl-6">
+					<h1 class="hero__headline wow fadeInDown" data-wow-duration="1s" data-wow-delay=".25s">Tak for din besked!</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+} else {
+	@Html.Partial("~/Views/Partials/Website/RenderContentComponents.cshtml", Model.Content, new ViewDataDictionary { { "propertyAlias", "content" } })
+	<section class="contact">
+		<div class="grid grid--container">
+			<div class="row">
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-4 col--m-offset-3">
+					<h2 class="contact__headline">Send os en besked</h2>
+				</div>
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-5 col--m-offset-1">
+					<form class="contact-form" method="post">
+						<input class="contact-form__input" id="contactFormName" type="text" name="Name" required="true" placeholder=" ">
+						<label class="contact-form__label" for="contactFormName">Navn</label>
+						<input class="contact-form__input" id="contactFormEmail" type="email" name="Email" required="true" placeholder=" ">
+						<label class="contact-form__label" for="contactFormEmail">E-mail</label>
+						<input class="contact-form__input" id="contactFormPhone" type="tel" name="Phone" required="true" placeholder=" ">
+						<label class="contact-form__label" for="contactFormPhone">Telefon nr.</label>
+						<textarea class="contact-form__field contact-form__field--textarea" id="contactFormMessage" name="Message" rows="4" required="true" placeholder=" "></textarea>
+						<label class="contact-form__label contact-form__label--textarea" for="contactFormMessage">Besked</label>
+						<input class="contact-form__checkbox" id="contactFormGDPR" type="checkbox" name="GDPR" required="true">
+						<label class="contact-form__label--checkbox" for="contactFormGDPR">Jeg giver samtykke til, at Neurorehab registrerer de data, som jeg oplyser i formularen, for at besvare min henvendelse.</label>
+						<button class="btn--contact-form" type="submit" onclick="fbq('track', 'Lead');">Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="contact-map">
+		<div class="contact-map__information">
+			<h2 class="contact-map__information-headline">I midten af Aalborg</h2>
+			<address>
+				@if (website.HasValue("contactInfoAddress")) {
+					@Html.Raw(@umbraco.library.ReplaceLineBreaks(website.GetPropertyValue<string>("contactInfoAddress")));
+				}
+			</address>
+		</div>
+		<div class="contact-map__map-container"></div>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpI1WmoSf2SK8k8-t8stV1URC9ezi34rQ" async defer></script>
+	</section>
+}

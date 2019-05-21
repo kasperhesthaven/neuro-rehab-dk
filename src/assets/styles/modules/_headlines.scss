@@ -1,0 +1,17 @@
+// =============================================================================
+// Headlines
+// =============================================================================
+
+.category-headline {
+	font-family: $font-family-heading;
+	font-weight: 700;
+	font-size: rem(14px);
+	line-height: 1;
+	text-transform: uppercase;
+
+	color: $color-primary;
+}
+
+.category-headline--orange {
+	color: $color-secondary;
+}

@@ -1,0 +1,40 @@
+// =============================================================================
+// Footer gutter
+// =============================================================================
+
+.footer-gutter {
+	padding: rem(50px) 0.5rem;
+
+	color: $color-white;
+	background-color: $color-primary;
+
+	@include media(">=m") {
+		padding: rem(100px) 0;
+	}
+}
+
+.footer-gutter__link,
+.footer-gutter__link-some {
+	display: block;
+	margin-bottom: 0.75em;
+
+	font-family: $font-family-body;
+	font-weight: 400;
+	font-size: 1rem;
+	text-transform: none;
+	&::before,
+	&::after {
+		content: none;
+	}
+}
+
+.footer-gutter__link-some {
+	display: inline-block;
+	margin: 1em 0.25em;
+
+	@include media(">=m") {
+		display: block;
+		margin-top: 0;
+		margin-bottom: 0.25em;
+	}
+}

@@ -1,0 +1,21 @@
+// ==========================================================================
+// Inputs
+// ==========================================================================
+
+input {
+	border-radius: 0;
+	display: inline-block;
+	width: 100%;
+	border: 0;
+	border-bottom: 1px solid $color-primary;
+	background-color: transparent;
+	cursor: text;
+
+	font-family: $font-family-body;
+	font-size: 1rem;
+	color: $color-primary;
+	outline: 0;
+	&:focus {
+		border-color: $color-secondary;
+	}
+}

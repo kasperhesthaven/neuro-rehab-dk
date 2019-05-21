@@ -1,0 +1,42 @@
+// =============================================================================
+// Base / Globals
+// =============================================================================
+
+* {
+	//
+}
+
+:root {
+	// Global CSS variables go here
+}
+
+html {
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	font-size: $font-size;
+	text-size-adjust: 100%;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font-family: $font-family-body;
+	font-size: 100%;
+
+	color: $color-primary;
+
+
+	& > main,
+	& > footer {
+		position: relative;
+
+		display: block;
+		max-width: $container-width;
+		margin: 0 auto;
+	}
+	&.preload {
+		transition: none;
+	}
+}

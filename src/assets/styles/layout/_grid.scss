@@ -1,0 +1,208 @@
+// ==========================================================================
+// Grid
+// ==========================================================================
+
+// Grid breakpoints
+$grid-breakpoints: (
+	xxs : 0,
+	xs  : 375px,
+	s   : 768px,
+	m   : 1024px,
+	l   : 1366px,
+	xl  : 1600px,
+	xxl : 1920px
+) !default;
+
+// Number of columns
+$columns: 16 !default;
+
+// Helper for the grid align
+@mixin make-row-helpers($grid-breakpoints) {
+	.row--#{$grid-breakpoints}-align-top {
+		align-items: flex-start;
+	}
+	.row--#{$grid-breakpoints}-align-center {
+		align-items: center;
+	}
+	.row--#{$grid-breakpoints}-align-bottom {
+		align-items: flex-end;
+	}
+}
+
+// Helper for the grid justify
+@mixin make-row-helpers($grid-breakpoints) {
+	.row--#{$grid-breakpoints}-justify-start {
+		justify-content: flex-start;
+	}
+	.row--#{$grid-breakpoints}-justify-center {
+		justify-content: center;
+	}
+	.row--#{$grid-breakpoints}-justify-end {
+		justify-content: flex-end;
+	}
+}
+
+// Helper for the sorting the first item
+@mixin make-col-helpers($grid-breakpoints) {
+	.col--#{$grid-breakpoints}-align-top {
+		align-self: flex-start;
+	}
+	.col--#{$grid-breakpoints}-align-center {
+		align-self: center;
+	}
+	.col--#{$grid-breakpoints}-align-bottom {
+		align-self: flex-end;
+	}
+
+	.col--#{$grid-breakpoints}-first {
+		order: -1;
+	}
+	.col--#{$grid-breakpoints}-last {
+		order: 1;
+	}
+	.col--#{$grid-breakpoints}-reset {
+		order: 0;
+	}
+	.row--#{$grid-breakpoints}-reverse {
+		flex-direction: row-reverse;
+	}
+	.col--#{$grid-breakpoints}-flex {
+		display: flex;
+	}
+}
+
+@mixin make-text-helpers($grid-breakpoints) {
+	.text--#{$grid-breakpoints}-right {
+		text-align: right;
+	}
+	.text--#{$grid-breakpoints}-left {
+		text-align: left;
+	}
+	.text--#{$grid-breakpoints}-center {
+		text-align: center;
+	}
+}
+
+@mixin make-helpers($grid-breakpoints) {
+	@include make-row-helpers($grid-breakpoints);
+	@include make-col-helpers($grid-breakpoints);
+	@include make-text-helpers($grid-breakpoints);
+}
+
+@mixin make-default() {
+	& {
+		flex-basis: 0;
+		flex-grow: 1;
+		max-width: 100%;
+		padding: 1rem 0.5rem 0;
+	}
+}
+
+@mixin make-offset($columns) {
+	@for $number from 0 through $columns {
+		&-offset-#{$number} {
+			margin-left: (100 / $columns * $number)#{"%"};
+		}
+	}
+}
+
+@mixin make-column($columns ) {
+	@for $number from 1 through $columns {
+		&-#{$number} {
+			flex: none;
+			width: (100 / $columns * $number)#{"%"};
+		}
+	}
+}
+
+@mixin make-grid-column($grid-breakpoints, $columns) {
+	@include make-helpers($grid-breakpoints);
+	.col--#{$grid-breakpoints} {
+		@include make-default();
+		@include make-column($columns);
+		@include make-offset($columns);
+	}
+}
+
+@mixin init($grid-breakpoints, $columns) {
+	@each $grid-breakpoints, $width in $grid-breakpoints {
+		@if ($width == 0) {
+			@include make-grid-column($grid-breakpoints, $columns);
+		} @else {
+			@media (min-width: $width) {
+				@include make-grid-column($grid-breakpoints, $columns);
+			}
+		}
+	}
+}
+
+@mixin has($element) {
+	&__#{$element} {
+		@content;
+	}
+}
+
+@mixin variant($modifier) {
+	&--#{$modifier} {
+		@content;
+	}
+}
+
+.col {
+	flex: 0 0 100%;
+	box-sizing: border-box;
+	max-width: 100%;
+	padding: 1rem 0.5rem 0;
+
+	@include variant(no-gutters) {
+		padding: 0;
+	}
+}
+
+.grid {
+	box-sizing: border-box;
+	padding: 0 0.5rem;
+
+	@include variant(container) {
+		width: 100%;
+		max-width: $container-width;
+		margin: 0 auto;
+	}
+	@include variant(no-gutters) {
+		padding: 0;
+	}
+}
+
+.row {
+	display: flex;
+	flex: 0 1 100%;
+	flex-direction: row;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	margin: -1rem -0.5rem 1rem -0.5rem;
+	padding: 0;
+
+	list-style: none;
+
+	@include variant(no-gutters) {
+		margin: 0;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.text {
+	@include variant(left) {
+		text-align: left;
+	}
+	@include variant(center) {
+		text-align: center;
+	}
+	@include variant(right) {
+		text-align: right;
+	}
+}
+
+@include init($grid-breakpoints, $columns);

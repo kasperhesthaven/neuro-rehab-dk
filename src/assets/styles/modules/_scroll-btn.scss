@@ -1,0 +1,57 @@
+// =============================================================================
+// Scroll button
+// =============================================================================
+
+.scroll-btn {
+	display: none;
+	position: relative;
+
+	text-align: center;
+
+	cursor: pointer;
+	width: 2rem;
+	height: 2rem;
+	border: 2px solid $color-white;
+	border-radius: 50%;
+	z-index: 2;
+	margin-top: 2rem;
+	animation: bounce 5s infinite 5s !important;
+	transition: transform $duration $ease-out-quad;
+
+	&::before {
+		position: absolute;
+		top: calc(50% - .325rem);
+		left: calc(50% - .3rem);
+		transform: rotate(-45deg);
+		display: block;
+		width: .65rem;
+		height: .65rem;
+		content: "";
+		border: 2px solid $color-white;
+		border-width: 0 0 2px 2px;
+	}
+
+	&:hover {
+		transform: translateY(-.5rem);
+	}
+
+	.preload & {
+		opacity: 0;
+	}
+
+	@include media(">=xs") {
+		display: inline-block;
+	}
+}
+
+@keyframes bounce {
+	0%, 80%, 90%, 100% {
+		transform: translateY(0);
+	}
+	85% {
+		transform: translateY(-1rem);
+	}
+	95% {
+		transform: translateY(-.5rem);
+	}
+}

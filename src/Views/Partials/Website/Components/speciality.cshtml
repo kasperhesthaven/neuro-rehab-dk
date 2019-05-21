@@ -1,0 +1,44 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+<section class="speciality">
+	<div class="grid grid--container">
+		<div class="row">
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-10 col--m-offset-3">
+				@if (Model.Content.HasValue("specialityHeadline")) {
+					<h2 class="speciality__headline">@Model.Content.GetPropertyValue("specialityHeadline")</h2>
+				}
+			</div>
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-4 col--m-offset-3">
+				@if (Model.Content.HasValue("specialityTextContent")) {
+					<p class="speciality__text-content">@Model.Content.GetPropertyValue("specialityTextContent")</p>
+				}
+				@if (Model.Content.HasValue("specialityExpandableList")) {
+					var listItems = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("specialityExpandableList");
+					<ul class="expandable-list">
+						@if (listItems.Any()) {
+							foreach (var listItem in listItems) {
+								<li class="expandable-list__item">
+									@if (listItem.HasValue("listLink")) {
+										<a href="@Umbraco.NiceUrl(listItem.GetPropertyValue<int>("listLink"))">
+											<span class="expandable-list__item-title">@listItem.GetPropertyValue("listTitle")</span>
+										</a>
+									} else {
+										<span class="expandable-list__item-title">@listItem.GetPropertyValue("listTitle")</span>
+										<p class="expandable-list__item-content">@listItem.GetPropertyValue("listTextContent")</p>
+									}
+								</li>
+							}
+						}
+					</ul>
+				}
+			</div>
+			<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-7 col--m-offset-1 col--xxs-first col--m-reset">
+				@{
+					var imageObject = Model.Content.GetPropertyValue<IPublishedContent>("SpecialityImage");
+					var imageAlt = Model.Content.GetPropertyValue("SpecialityImageAlt");
+						<img class="speciality__image" src="@imageObject.Url" alt="@imageAlt">
+				}
+			</div>
+		</div>
+	</div>
+</section>

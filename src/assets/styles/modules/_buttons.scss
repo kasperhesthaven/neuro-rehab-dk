@@ -1,0 +1,51 @@
+// =============================================================================
+// Buttons
+// =============================================================================
+
+.btn {
+	//
+}
+
+.btn--burger {
+	position: fixed;
+	z-index: 5;
+	top: 1.5rem;
+	right: 1.5rem;
+
+	display: block;
+
+	@include media(">=s") {
+		top: 2rem;
+		right: 2rem;
+	}
+	@include media(">=m") {
+		display: none;
+	}
+	&::after {
+		content: none;
+	}
+	.line {
+		display: block;
+		width: 2rem;
+		height: 2px;
+		margin: 0.35rem auto;
+
+		background-color: #e5e5e5;
+
+		transition: opacity $duration $ease-in-out-quad, transform $duration $ease-in-out-quad;
+	}
+	&.js-active {
+		.line:first-child {
+			transform: translateY(0.5rem) rotate(45deg);
+		}
+		.line:nth-child(2) {
+			opacity: 0;
+
+			transform: translateX(-50%);
+		}
+		.line:nth-child(3) {
+			// .45 due to being off by 1 pixel
+			transform: translateY(-0.45rem) rotate(-45deg);
+		}
+	}
+}

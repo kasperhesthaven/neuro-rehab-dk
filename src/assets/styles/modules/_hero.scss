@@ -1,0 +1,48 @@
+// =============================================================================
+// Hero
+// =============================================================================
+
+.hero {
+	position: relative;
+
+	display: flex;
+	align-items: center;
+	height: 100vh;
+	min-height: 100vh;
+
+	color: $color-white;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	.preload & {
+		opacity: 0;
+	}
+
+	@include media("height>=1440px") {
+		min-height: rem(900px);
+		padding: rem(200px) 0;
+	}
+}
+
+.hero__headline {
+	padding-bottom: 0.25em;
+
+	.preload & {
+		opacity: 0;
+	}
+}
+
+.hero__category {
+	font-family: $font-family-heading;
+	font-weight: 700;
+	font-size: rem(14px);
+	line-height: 1;
+	text-transform: uppercase;
+
+	color: $color-primary;
+
+	.preload & {
+		opacity: 0;
+	}
+}

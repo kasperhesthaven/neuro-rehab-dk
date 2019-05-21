@@ -1,0 +1,31 @@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@if (Model.Content.HasValue("clinicImage")) {
+	var imageObject = Model.Content.GetPropertyValue<IPublishedContent>("clinicImage");
+	<section class="clinic" style="background-image: url(@imageObject.Url)">
+		<div class="grid grid--container">
+			<div class="row">
+				<div class="col col--xxs-14 col--xxs-offset-1 col--s-12 col--s-offset-2 col--m-6 col--m-offset-3 col--m-align-center">
+					@if (Model.Content.HasValue("clinicHeadline")) {
+						<h2 class="clinic__headline">@Model.Content.GetPropertyValue("clinicHeadline")</h2>
+					}
+					@if (Model.Content.HasValue("clinicSubheadline")) {
+						<p class="clinic__subheadline">@Model.Content.GetPropertyValue("clinicSubheadline")</p>
+					}
+					@if (Model.Content.HasValue("clinicTextContent")) {
+						<p class="clinic__text-content">@Model.Content.GetPropertyValue("clinicTextContent")</p>
+					}
+					@if (Model.Content.HasValue("clinicLinkText")) {
+						var linkURL = "";
+						if (Model.Content.HasValue("clinicInternalLink")) {
+							linkURL = Umbraco.NiceUrl(Model.Content.GetPropertyValue<int>("clinicInternalLink"));
+						} else if (Model.Content.HasValue("clinicExternalLink")) {
+							linkURL = Model.Content.GetPropertyValue<string>("clinicExternalLink");
+						}
+						<a href="@linkURL">@Model.Content.GetPropertyValue("clinicLinkText")</a>
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+}
